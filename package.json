@@ -1,0 +1,31 @@
+{
+    "name": "noderelaxproject",
+    "version": "1.0.0",
+    "description": "API для учебного проекта Relax",
+    "main": "./app/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node ./app/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Nikitoskaluv/NodeRelaxProject.git"
+    },
+    "author": "Kostareva Anastasiya",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Nikitoskaluv/NodeRelaxProject/issues"
+    },
+    "homepage": "https://github.com/Nikitoskaluv/NodeRelaxProject#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.0",
+        "cookie-parser": "^1.4.6",
+        "express": "^4.18.1",
+        "express-session": "^1.17.3",
+        "jsonwebtoken": "^8.5.1",
+        "passport": "^0.6.0",
+        "path": "^0.12.7"
+    }
+}
