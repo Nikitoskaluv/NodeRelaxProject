@@ -7,6 +7,11 @@ const port = 8000;
 
 app.use(express.json());
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    next();
+});
 
 app.post('/registration', (req, res) => {
     const user = req.body;
