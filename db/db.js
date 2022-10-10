@@ -1,4 +1,4 @@
-import { DB_FILE } from "../constants";
+import { DB_FILE } from "../constants.js";
 
 import * as fs from "fs";
 if (!fs.existsSync(DB_FILE)) {
