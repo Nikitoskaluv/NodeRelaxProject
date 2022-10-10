@@ -1,4 +1,4 @@
-const DB_FILE = './users.json'
+import { DB_FILE } from "../constants";
 
 import * as fs from "fs";
 if (!fs.existsSync(DB_FILE)) {
@@ -22,4 +22,7 @@ export function addUser(user) {
     return false;
 }
 
+export function getAllUsers() {
+    return users;
+}
 

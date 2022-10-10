@@ -67,7 +67,7 @@ app.post('/auth', (req, res) => {
 
 
 app.get('/users', (req, res) => {
-    res.json([]);
+    res.json(userService.getAllUsers());
 })
 
 
