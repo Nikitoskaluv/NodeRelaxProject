@@ -1,5 +1,6 @@
 import express from 'express';
 import * as userService from '../services/userService.js';
+import * as timerService from '../services/timerService.js'
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
@@ -77,12 +78,23 @@ app.get('/users', authenticateToken, (req, res) => {
 })
 
 app.post('/timer', authenticateToken, (req, res) => {
+    const timer = req.body;
+    const result = timerService.saveTimer(timer);
 
-    res.status(200);
-    return res.json({
-        message: 'OK'
-    })
-})
+    if (result) {
+        res.status(200);
+        return res.json({
+            message: 'OK'
+        })
+    } else {
+        res.status(500);
+        return res.json({
+            message: 'Ошибка сохранения'
+        })
+    }
+
+});
+
 function authenticateToken(req, res, next) {
     const token = req.headers['authorization'];
     if (token == null) return res.sendStatus(401);
