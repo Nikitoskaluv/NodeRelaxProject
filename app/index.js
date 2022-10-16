@@ -75,6 +75,10 @@ app.post('/auth', (req, res) => {
 app.get('/users', authenticateToken, (req, res) => {
 
     res.json(userService.getAllUsers());
+});
+
+app.get('/timer', authenticateToken, (req, res) => {
+    res.json(timerService.getAllTimers());
 })
 
 app.post('/timer', authenticateToken, (req, res) => {
