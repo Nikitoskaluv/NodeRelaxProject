@@ -79,6 +79,9 @@ app.get('/users', authenticateToken, (req, res) => {
 
 app.post('/timer', authenticateToken, (req, res) => {
     const timer = req.body;
+    timer.user = req.user;
+    timer.serverTime = new Date();
+    console.log(`timer2`, timer);
     const result = timerService.saveTimer(timer);
 
     if (result) {
