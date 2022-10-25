@@ -55,7 +55,9 @@ app.post('/auth', (req, res) => {
         if (result) {
             res.status(200).json({
                 message: 'Авторизация прошла успешно',
-                token: jwt.sign(user.login, JWT_KEY)
+                token: jwt.sign(user.login, JWT_KEY, {
+                    expiresIn: '1m',
+                })
             });
         } else {
             res.status(403);
@@ -69,7 +71,8 @@ app.post('/auth', (req, res) => {
             message: 'Некорректный запрос'
         })
     }
-})
+});
+
 
 
 app.get('/users', authenticateToken, (req, res) => {
