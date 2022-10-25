@@ -55,7 +55,7 @@ app.post('/auth', (req, res) => {
         if (result) {
             res.status(200).json({
                 message: 'Авторизация прошла успешно',
-                token: jwt.sign({ login: user.login, expiresIn: "2h" }, JWT_KEY)
+                token: jwt.sign({ login: user.login }, JWT_KEY, { expiresIn: "2h" })
             });
         } else {
             res.status(403);
