@@ -48,3 +48,14 @@ export function addTimer(timer) {
 export function getAllTimers() {
     return timers;
 }
+export function getUser(login) {
+    try {
+        const authedUserFromDB = users.find(user => user.login === login);
+        return {
+            login: authedUserFromDB.login,
+            name: authedUserFromDB.name
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}

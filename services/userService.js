@@ -24,6 +24,9 @@ export function authUser(user) {
 export function getAllUsers() {
     return db.getAllUsers();
 }
+export function getUser() {
+    return db.getUser();
+}
 
 
 
