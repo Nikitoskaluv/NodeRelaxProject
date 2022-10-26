@@ -28,7 +28,6 @@ export function getAllUsers() {
 }
 
 
-
 if (!fs.existsSync(TIMER_DB_FILE)) {
     fs.writeFileSync(TIMER_DB_FILE, JSON.stringify([]));
 }
@@ -48,12 +47,15 @@ export function addTimer(timer) {
 export function getAllTimers() {
     return timers;
 }
+
 export function getUser(login) {
     try {
-        const authedUserFromDB = users.find(user => user.login === login);
-        return {
-            login: authedUserFromDB.login,
-            name: authedUserFromDB.name
+        const user = users.find(user => user.login === login);
+        if (user) {
+            return {
+                login: user.login,
+                name: user.name
+            }
         }
     } catch (e) {
         console.log(e);

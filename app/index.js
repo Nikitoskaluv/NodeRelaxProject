@@ -75,9 +75,10 @@ app.post('/auth', (req, res) => {
     }
 });
 
-app.get('/user_profile', authenticateToken, (req, res) => {
-    res.json(userService.getAllUsers());
-})
+app.get('/user', authenticateToken, (req, res) => {
+    console.log(req.user_login);
+    res.json(userService.getUser(req.user_login));
+});
 
 app.get('/users', authenticateToken, (req, res) => {
     res.json(userService.getAllUsers());
@@ -89,7 +90,7 @@ app.get('/timer', authenticateToken, (req, res) => {
 
 app.post('/timer', authenticateToken, (req, res) => {
     const timer = req.body;
-    timer.user = req.user;
+    timer.user = req.user_login;
     timer.serverTime = new Date();
     console.log(`timer2`, timer);
     const result = timerService.saveTimer(timer);
@@ -120,7 +121,7 @@ function authenticateToken(req, res, next) {
                 message: 'Не авторизованный пользователь'
             })
         }
-        req.user = user
+        req.user_login = user.login
         next()
     })
 }
