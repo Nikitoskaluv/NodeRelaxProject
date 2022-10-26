@@ -55,6 +55,10 @@ app.post('/auth', (req, res) => {
         if (result) {
             res.status(200).json({
                 message: 'Авторизация прошла успешно',
+                user: {
+                    login: user.login,
+                    name: user.name
+                },
                 token: jwt.sign({ login: user.login }, JWT_KEY, { expiresIn: "2h" })
             });
         } else {
@@ -71,10 +75,11 @@ app.post('/auth', (req, res) => {
     }
 });
 
-
+app.get('/user_profile', authenticateToken, (req, res) => {
+    res.json(userService.getAllUsers());
+})
 
 app.get('/users', authenticateToken, (req, res) => {
-
     res.json(userService.getAllUsers());
 });
 
@@ -104,12 +109,17 @@ app.post('/timer', authenticateToken, (req, res) => {
 });
 
 function authenticateToken(req, res, next) {
+
     const token = req.headers['authorization'];
     if (token == null) return res.sendStatus(401);
 
     jwt.verify(token, JWT_KEY, (err, user) => {
-        console.log(err)
-        if (err) return res.sendStatus(403)
+        if (err) {
+            res.status(403);
+            return res.json({
+                message: 'Не авторизованный пользователь'
+            })
+        }
         req.user = user
         next()
     })
