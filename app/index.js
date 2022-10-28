@@ -82,10 +82,33 @@ app.get('/user', authenticateToken, (req, res) => {
 });
 
 app.put('/user', authenticateToken, (req, res) => {
-    res.json(userService.updateUser(req.body));
+    const result = userService.updateUser(req.body);
+    if (result) {
+        res.status(200);
+        return res.json({
+            message: 'Сохранено успешно'
+        })
+    } else {
+        res.status(500);
+        return res.json({
+            message: 'Ошибка сохранения'
+        })
+    }
 });
+
 app.put('/user/password', authenticateToken, (req, res) => {
-    res.json(userService.updateUserPassword(req.body));
+    const result = userService.updateUserPassword(req.body);
+    if (result) {
+        res.status(200);
+        return res.json({
+            message: 'Сохранено успешно'
+        })
+    } else {
+        res.status(500);
+        return res.json({
+            message: 'Ошибка сохранения'
+        })
+    }
 });
 app.get('/users', authenticateToken, (req, res) => {
     res.json(userService.getAllUsers());

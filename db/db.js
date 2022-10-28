@@ -66,9 +66,10 @@ export function updateUser(src_user) {
     try {
         const db_user = users.find(u => u.login === src_user.login);
         if (db_user) {
-            db_user.name = src_user.name
+            db_user.name = src_user.name;
+            return true;
         } else {
-            return "User not found"
+            return false;
         }
     } catch (e) {
         console.log(e);
@@ -79,9 +80,10 @@ export function updateUserPassword(src_user) {
     try {
         const db_user = users.find(u => u.login === src_user.login);
         if (db_user) {
-            db_user.password = src_user.password
+            db_user.password = src_user.password;
+            return true
         } else {
-            return "User not found"
+            return false
         }
     } catch (e) {
         console.log(e);

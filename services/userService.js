@@ -27,11 +27,21 @@ export function getAllUsers() {
 export function getUser(login) {
     return db.getUser(login);
 }
+
 export function updateUser(user) {
-    return db.updateUser(user);
+    if (db.updateUser(user)) {
+        return db.updateUser(user);
+    } else {
+        return false;
+    }
 }
+
 export function updateUserPassword(user) {
-    return db.updateUserPassword(user);
+    if (db.updateUserPassword(user)) {
+        return db.updateUserPassword(user);
+    } else {
+        return false;
+    }
 }
 
 
