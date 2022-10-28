@@ -28,7 +28,6 @@ export function getAllUsers() {
 }
 
 
-
 if (!fs.existsSync(TIMER_DB_FILE)) {
     fs.writeFileSync(TIMER_DB_FILE, JSON.stringify([]));
 }
@@ -48,12 +47,41 @@ export function addTimer(timer) {
 export function getAllTimers() {
     return timers;
 }
+
 export function getUser(login) {
     try {
-        const authedUserFromDB = users.find(user => user.login === login);
-        return {
-            login: authedUserFromDB.login,
-            name: authedUserFromDB.name
+        const user = users.find(user => user.login === login);
+        if (user) {
+            return {
+                login: user.login,
+                name: user.name
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export function updateUser(src_user) {
+    try {
+        const db_user = users.find(u => u.login === src_user.login);
+        if (db_user) {
+            db_user.name = src_user.name
+        } else {
+            return "User not found"
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export function updateUserPassword(src_user) {
+    try {
+        const db_user = users.find(u => u.login === src_user.login);
+        if (db_user) {
+            db_user.password = src_user.password
+        } else {
+            return "User not found"
         }
     } catch (e) {
         console.log(e);

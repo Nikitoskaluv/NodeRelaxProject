@@ -1,1 +1,55 @@
-[{"type":"work","time":"someDate","status":"start","id":"222"},{"type":"work","time":"someDate","status":"start","id":"222","user":"mail4@ma.ru"},{"type":"work","time":"someDate","status":"start","id":"222","user":"mail4@ma.ru","serverTime":"2022-10-16T08:40:55.398Z"},{"type":"work","time":"someDate","status":"start","id":"222","user":"mail4@ma.ru","serverTime":"2022-10-16T08:41:27.894Z"},{"type":"work","time":"someDate","status":"start","id":"222","user":"mail4@ma.ru","serverTime":"2022-10-16T08:41:40.767Z"},{"type":"work","time":"someDate","status":"start","id":"222","user":"mail4@ma.ru","serverTime":"2022-10-16T08:42:09.030Z"},{"type":"work","time":"someDate","status":"start","id":"222","user":"mail4@ma.ru","serverTime":"2022-10-16T08:43:57.423Z"}]
+[
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222"
+    },
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222",
+        "user": "mail4@ma.ru"
+    },
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222",
+        "user": "mail4@ma.ru",
+        "serverTime": "2022-10-16T08:40:55.398Z"
+    },
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222",
+        "user": "mail4@ma.ru",
+        "serverTime": "2022-10-16T08:41:27.894Z"
+    },
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222",
+        "user": "mail4@ma.ru",
+        "serverTime": "2022-10-16T08:41:40.767Z"
+    },
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222",
+        "user": "mail4@ma.ru",
+        "serverTime": "2022-10-16T08:42:09.030Z"
+    },
+    {
+        "type": "work",
+        "time": "someDate",
+        "status": "start",
+        "id": "222",
+        "user": "mail4@ma.ru",
+        "serverTime": "2022-10-16T08:43:57.423Z"
+    }
+]

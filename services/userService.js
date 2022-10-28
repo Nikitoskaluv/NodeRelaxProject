@@ -12,7 +12,7 @@ export function registerUser(user) {
 
 export function authUser(user) {
     const user_from_db = db.findUserByLogin(user.login);
-
+    console.log("DB", user_from_db)
     if (!user_from_db) {
         return false;
     }
@@ -24,11 +24,15 @@ export function authUser(user) {
 export function getAllUsers() {
     return db.getAllUsers();
 }
-export function getUser() {
-    return db.getUser();
+export function getUser(login) {
+    return db.getUser(login);
 }
-
-
+export function updateUser(user) {
+    return db.updateUser(user);
+}
+export function updateUserPassword(user) {
+    return db.updateUserPassword(user);
+}
 
 
 
