@@ -80,6 +80,12 @@ app.get('/user', authenticateToken, (req, res) => {
     res.json(userService.getUser(req.user_login));
 });
 
+app.put('/user', authenticateToken, (req, res) => {
+    res.json(userService.updateUser(req.body));
+});
+app.put('/user/password', authenticateToken, (req, res) => {
+    res.json(userService.updateUserPassword(req.body));
+});
 app.get('/users', authenticateToken, (req, res) => {
     res.json(userService.getAllUsers());
 });

@@ -27,8 +27,12 @@ export function getAllUsers() {
 export function getUser(login) {
     return db.getUser(login);
 }
-
-
+export function updateUser(user) {
+    return db.updateUser(user);
+}
+export function updateUserPassword(user) {
+    return db.updateUserPassword(user);
+}
 
 
 
