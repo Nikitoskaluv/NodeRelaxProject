@@ -44,6 +44,25 @@ export function addTimer(timer) {
     return false;
 }
 
+export function getTimerById(id) {
+    return timers.find(t => t.id == id);
+}
+
+export function updateTimer(id, timer) {
+    try {
+        const dbTimer = timers.filter(t => t.id == id);
+        if (dbTimer) {
+            timers.splice(timers.indexOf(dbTimer), 1);
+            timers.push(timer);
+        }
+        fs.writeFileSync(TIMER_DB_FILE, JSON.stringify(timers));
+        return true;
+    } catch (e) {
+        console.log(e);
+    }
+    return false;
+}
+
 export function getAllTimers() {
     return timers;
 }
