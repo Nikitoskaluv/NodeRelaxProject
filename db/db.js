@@ -50,7 +50,7 @@ export function getTimerById(id) {
 
 export function updateTimer(id, timer) {
     try {
-        const dbTimer = timers.filter(t => t.id == id);
+        const dbTimer = timers.find(t => t.id == id);
         if (dbTimer) {
             timers.splice(timers.indexOf(dbTimer), 1);
             timers.push(timer);
