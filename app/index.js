@@ -60,7 +60,7 @@ app.post('/auth', (req, res) => {
                     login: user.login,
                     name: user.name
                 },
-                token: jwt.sign({ login: user.login }, JWT_KEY, { expiresIn: "2h" })
+                token: jwt.sign({ login: user.login }, JWT_KEY, { expiresIn: "30d" })
             });
         } else {
             res.status(403);
