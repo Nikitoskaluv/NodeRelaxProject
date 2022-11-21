@@ -36,7 +36,7 @@ function isSameDate(d1, d2) {
     return today == date;
 }
 
-function getWeekStats(login) {
+export function getWeekStats(login) {
     const allTimersOfUser = db.getAllTimersOfUser(login);
     // console.log(allTimersOfUser, 'все таймеры юзера');
     const weekFilteredArr = filterPeriodTimers(allTimersOfUser);
@@ -76,7 +76,7 @@ function getWeekStats(login) {
     console.log("-----------------------------------------------")
     console.log("-----------------------------------------------")
     console.log("-----------------------------------------------")
-    console.log(result)
+    console.log(result, 'result');
     return result;
 
 
