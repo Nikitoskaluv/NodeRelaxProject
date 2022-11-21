@@ -35,6 +35,7 @@ const timers = JSON.parse(fs.readFileSync(TIMER_DB_FILE));
 
 export function addTimer(timer) {
     try {
+        timer.cratedAt = new Date().getTime();
         timers.push(timer);
         fs.writeFileSync(TIMER_DB_FILE, JSON.stringify(timers));
         return true;
@@ -53,6 +54,7 @@ export function updateTimer(id, timer) {
         const dbTimer = timers.find(t => t.id == id);
         if (dbTimer) {
             timers.splice(timers.indexOf(dbTimer), 1);
+            timer.createdAt = dbTimer.cratedAt;
             timers.push(timer);
         }
         fs.writeFileSync(TIMER_DB_FILE, JSON.stringify(timers));
@@ -107,4 +109,8 @@ export function updateUserPassword(src_user) {
     } catch (e) {
         console.log(e);
     }
+}
+
+export function getAllTimersOfUser(login) {
+    return timers.filter(t => t.user === login);
 }

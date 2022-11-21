@@ -139,6 +139,16 @@ app.post('/timer', authenticateToken, (req, res) => {
 
 });
 
+app.get('/user/stats/daily', authenticateToken, (req, res) => {
+    console.log(req.user_login);
+    res.json(timerService.getTimeObjectOfUser(req.user_login));
+    console.log(timerService.getTimeObjectOfUser(req.user_login));
+});
+
+app.get('/user/stats/weekly', authenticateToken, (req, res) => {
+    res.json(timerService.getWeekStats(req.user_login));
+})
+
 function authenticateToken(req, res, next) {
 
     const token = req.headers['authorization'];
@@ -155,6 +165,8 @@ function authenticateToken(req, res, next) {
         next()
     })
 }
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
