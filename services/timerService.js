@@ -22,28 +22,26 @@ function constructStatObject(med, rst, wrk) {
 
 export function getTimeObjectOfUser(login) {
     const allTimersOfUser = db.getAllTimersOfUser(login);
-    const today = new Date();
-    const med = allTimersOfUser.filter(t => isSameDate(today, new Date(t.createdAt))).filter(t => t.state == "FINISHED").filter(t => t.type === "meditation");
-    const rst = allTimersOfUser.filter(t => isSameDate(today, new Date(t.createdAt))).filter(t => t.state == "FINISHED").filter(t => t.type === "rest");
-    const wrk = allTimersOfUser.filter(t => isSameDate(today, new Date(t.createdAt))).filter(t => t.state == "FINISHED").filter(t => t.type === "work");
+
+    const med = allTimersOfUser.filter(t => isSameDate(new Date(), new Date(t.createdAt))).filter(t => t.state == "FINISHED").filter(t => t.type === "meditation");
+    const rst = allTimersOfUser.filter(t => isSameDate(new Date(), new Date(t.createdAt))).filter(t => t.state == "FINISHED").filter(t => t.type === "rest");
+    const wrk = allTimersOfUser.filter(t => isSameDate(new Date(), new Date(t.createdAt))).filter(t => t.state == "FINISHED").filter(t => t.type === "work");
+
     return constructStatObject(med, rst, wrk)
 }
 
 function isSameDate(d1, d2) {
-    const today = d1.setHours(0, 0, 0, 0);
-    const date = d2.setHours(0, 0, 0, 0);
-    // console.log('dates', today, date)
+    const today = d1.setUTCHours(0, 0, 0, 0);
+    const date = d2.setUTCHours(0, 0, 0, 0);
     return today == date;
 }
 
 export function getWeekStats(login) {
     const allTimersOfUser = db.getAllTimersOfUser(login);
-    // console.log(allTimersOfUser, 'все таймеры юзера');
-    const weekFilteredArr = filterPeriodTimers(allTimersOfUser);
-    // console.log(weekFilteredArr, 'таймеры за неделю');
-    weekFilteredArr.filter(t => t.state == "FINISHED");
-    const arrayWithChangedTimeStamp = weekFilteredArr.map(t => ({ ...t, createdAt: (new Date(t.createdAt).setHours(0, 0, 0, 0)).toString() }));
-    // console.log(arrayWithChangedTimeStamp, 'string');
+    let weekFilteredArr = filterPeriodTimers(allTimersOfUser);
+    weekFilteredArr = weekFilteredArr.filter(t => t.state == "FINISHED");
+    const arrayWithChangedTimeStamp = weekFilteredArr.map(t => ({ ...t, createdAtDate: (new Date(t.createdAt).setUTCHours(0, 0, 0, 0)) }));
+
 
     const groupBy = (array, key) => {
         return array.reduce((result, currentValue) => {
@@ -53,15 +51,11 @@ export function getWeekStats(login) {
             return result;
         }, {});
     };
-    const resultOfGroupe = groupBy(arrayWithChangedTimeStamp, 'createdAt');
-    console.log(resultOfGroupe, 'grouped');
-
+    const resultOfGroupe = groupBy(arrayWithChangedTimeStamp, 'createdAtDate');
 
     let result = [];
     for (let key of Object.keys(resultOfGroupe)) {
-        console.log(" >>>", key)
         let day = new Date(parseInt(key));
-        console.log(" >>>", day)
         let dayTimers = resultOfGroupe[key];
         let med = dayTimers.filter(t => t.type === "meditation");
         let rst = dayTimers.filter(t => t.type === "rest");
@@ -73,15 +67,8 @@ export function getWeekStats(login) {
         })
     }
 
-    console.log("-----------------------------------------------")
-    console.log("-----------------------------------------------")
-    console.log("-----------------------------------------------")
-    console.log(result, 'result');
+    result = result.sort((v1, v2) => v1.date.getTime() - v2.date.getTime());
     return result;
-
-
-    // const groupResult = arrayWithChangedTimeStamp.group(({ createdAt }) => createdAt);
-    // console.log(groupResult, 'grouping');
 
 }
 
@@ -90,21 +77,10 @@ function filterPeriodTimers(arr) {
     weekDate.setTime(todayDate.getTime() - (6 * 24 * 3600000));
     todayDate = new Date().setHours(23, 59, 59, 999);
     weekDate = weekDate.setHours(0, 0, 0, 0);
-    console.log(weekDate, '-7 days');
-    console.log(todayDate, 'today');
 
     let a = arr.filter(object => {
-        return object.createdAt <= todayDate && object.createdAt >= weekDate
+        return object.createdAt >= weekDate
     });
     return a;
 }
 
-
-
-
-
-
-
-
-
-getWeekStats('df@df.ru');
