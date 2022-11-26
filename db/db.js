@@ -36,12 +36,11 @@ const timers = JSON.parse(fs.readFileSync(TIMER_DB_FILE));
 export function addTimer(timer) {
     try {
         timer.createdAt = new Date().getTime();
-        console.log('created', timer)
         timers.push(timer);
         fs.writeFileSync(TIMER_DB_FILE, JSON.stringify(timers));
         return true;
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
     return false;
 }
@@ -61,7 +60,7 @@ export function updateTimer(id, timer) {
         fs.writeFileSync(TIMER_DB_FILE, JSON.stringify(timers));
         return true;
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
     return false;
 }
@@ -80,7 +79,7 @@ export function getUser(login) {
             }
         }
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
@@ -94,7 +93,7 @@ export function updateUser(src_user) {
             return false;
         }
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
@@ -108,7 +107,7 @@ export function updateUserPassword(src_user) {
             return false
         }
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 

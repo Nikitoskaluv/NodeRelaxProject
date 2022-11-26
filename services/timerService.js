@@ -35,10 +35,17 @@ function isSameDate(d1, d2) {
     const date = d2.setUTCHours(0, 0, 0, 0);
     return today == date;
 }
+function calculatePeriodStart(todayDate) {
+    let weekDate = new Date();
+    weekDate.setTime(todayDate.getTime() - (6 * 24 * 3600000));
+    weekDate = weekDate.setUTCHours(0, 0, 0, 0);
+    return weekDate;
+}
 
 export function getWeekStats(login) {
     const allTimersOfUser = db.getAllTimersOfUser(login);
-    let weekFilteredArr = filterPeriodTimers(allTimersOfUser);
+    const periodStart = calculatePeriodStart(new Date());
+    let weekFilteredArr = filterPeriodTimers(allTimersOfUser, periodStart);
     weekFilteredArr = weekFilteredArr.filter(t => t.state == "FINISHED");
     const arrayWithChangedTimeStamp = weekFilteredArr.map(t => ({ ...t, createdAtDate: (new Date(t.createdAt).setUTCHours(0, 0, 0, 0)) }));
 
@@ -68,19 +75,53 @@ export function getWeekStats(login) {
     }
 
     result = result.sort((v1, v2) => v1.date.getTime() - v2.date.getTime());
+    result = replaceEmptyDates(result, periodStart);
     return result;
 
 }
 
-function filterPeriodTimers(arr) {
-    let todayDate = new Date(), weekDate = new Date();
-    weekDate.setTime(todayDate.getTime() - (6 * 24 * 3600000));
-    todayDate = new Date().setHours(23, 59, 59, 999);
-    weekDate = weekDate.setHours(0, 0, 0, 0);
-
+function filterPeriodTimers(arr, start) {
+    let todayDate = new Date();
+    todayDate = new Date().setUTCHours(23, 59, 59, 999);
     let a = arr.filter(object => {
-        return object.createdAt >= weekDate
+        return object.createdAt >= start
     });
     return a;
 }
+
+function replaceEmptyDates(src, startDate) {
+
+    let result = [];
+    let currentDate = new Date(startDate).setUTCHours(0, 0, 0, 0);
+    let todayDate = new Date().setUTCHours(0, 0, 0, 0);
+
+    while (currentDate <= todayDate) {
+        const date = new Date(currentDate);
+        result.push({
+            date: new Date(date.getTime()),
+            data: {}
+        });
+
+        currentDate = new Date(date.setDate(date.getDate() + 1)).setUTCHours(0, 0, 0, 0);
+    }
+
+    for (let i = 0; i < result.length; i++) {
+        let date = result[i].date;
+
+        let value = src.find(item => item.date.getTime() == date.getTime());
+        if (value) {
+            result[i].data = value.data;
+        } else {
+            result[i].data = {
+                'meditation': 0,
+                'rest': 0,
+                'work': 0
+            }
+        }
+    }
+
+    return result;
+}
+
+
 
